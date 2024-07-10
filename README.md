@@ -17,6 +17,15 @@ stow */
 
 to symlink everything to `.config`. 
 
+**NOTE**: the config for `tmux` is not working as expected. I need to figure out what's going on there, but in the meantime you can still stow the others easily:
+
+```zsh
+stow nvim 
+stow zsh
+stow starship
+```
+
+
 ## TODO
 
 Eventually I should figure out how to use `git submodules` for my `nvim` and `tmux` configs.

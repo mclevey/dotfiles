@@ -52,13 +52,41 @@ find ~/dotfiles -name ".DS_Store" -exec rm -f {} \;
 
 ## Stow everything
 
-You can stow everything with `stow */`, which is especially useful when you need to get up and running in on a new machine. 
+You can stow everything (assuming all configs are in subdirectories) with `stow */`, which is especially useful when you need to get up and running in on a new machine. 
 
 ```
 cd dotfiles && stow */
 ```
 
-## TODO
+# Package Installs
 
-I will eventually transition to using `git submodules` to manage external dependendencies for tools like `nvim`, `nord-theme`, and `tmux`, but I don't have the bandwidth for that right now.
+## macOS (Homebrew)
 
+Export a list of installed packages from the old machine: 
+
+```zsh
+brew leaves > ~/.leaves.txt
+```
+
+Alternatively, `stow homebrew`.
+
+Fresh install on the new machine: 
+
+```zsh
+xargs brew install < ~/.leaves.txt
+```
+
+## Ubuntu Linux (apt-get)
+
+Export a list of installed packages from the old machine: 
+
+```zsh
+apt-mark showmanual > ~/.packages.txt
+```
+
+Fresh install on the new machine: 
+
+```zsh
+sudo apt-get update
+xargs -a ~/.packages.txt sudo apt-get install -y
+```

@@ -38,7 +38,7 @@ cd dotfiles && stow */
 Export a list of installed packages from the old machine: 
 
 ```zsh
-brew leaves > ~/dotfiles/homebrew/.leaves.txt
+brew leaves > ~/dotfiles/homebrew/.packages.txt
 ```
 
 Alternatively, `stow homebrew`.
@@ -47,7 +47,7 @@ Fresh install on the new machine:
 
 ```zsh
 stow homebrew
-xargs brew install < ~/.leaves.txt
+xargs brew install < ~/.packages.txt
 ```
 
 ## Ubuntu Linux (apt-get)

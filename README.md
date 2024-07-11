@@ -3,40 +3,17 @@
 John McLevey  
 University of Waterloo 
 
-This repository contains personal dotfiles, managed with `git` and GNU `stow`. It's designed for my current setup on macOS 14.5 (Sonoma) and Ubuntu 24.4 LTS (Noble Numbat). I've stripped it down to the essentials and will add new configs if and when they are needed. For me, the essentials are `stow` itself, `zsh`, `starship`, `tmux`, `nvim`, `git`, `pypoetry`, `conda`, and `mamba`.  
-
+This repository contains my personal dotfiles, managed with `git` and GNU `stow`. It's designed for my current setup on macOS 14.5 (Sonoma) and Ubuntu 24.4 LTS (Noble Numbat). I've stripped it down to the essentials and will add new configs if and when they are needed. For me, the essentials are currently:
 
 # Essentials
 
-## GNU `stow`
-
 ```zsh
 stow gnu_stow
-```
-
-## `zsh` and `starship`
-
-```zsh
 stow zsh
 stow starship
-```
-
-## `tmux` and `neovim`
-
-```zsh
 stow tmux
 stow nvim 
-```
-
-## `git`
-
-```zsh
 stow git 
-```
-
-## `pypoetry`, `conda`, and `mamba`
-
-```zsh
 stow pypoetry
 stow conda 
 stow mamba
@@ -44,17 +21,13 @@ stow mamba
 
 # Handling `.DS_Store` Files on macOS
 
-`stow` ignores the files listed in `.stowrc` (global) and `.stow-local-ignore` (local), but for some reasome reason I find both to be a little unreliable when it comes to `.DS_Store` metadata files on macOS. Most of the time I end up removing these files by running the command below (aliased as `cds` for clean DS Store in `.zshrc`) whenever `stow` complains about file conflicts.  
-
-```zsh
-find ~/dotfiles -name ".DS_Store" -exec rm -f {} \;
-```
+`.DS_Store` files on macOS will often cause file conflicts. Sometimes I remove them by running `find ~/dotfiles -name ".DS_Store" -exec rm -f {} \;` (aliased as `cds`), but it's better just to tell `stow` to ignore `.DS_Store` files. You do this locally with `.stow-local-ignore` or globally in `.stowrc`.   
 
 ## Stow everything
 
-You can stow everything (assuming all configs are in subdirectories) with `stow */`, which is especially useful when you need to get up and running in on a new machine. 
+You can stow everything (assuming all configs are in subdirectories) with `stow */`. 
 
-```
+```zsh
 cd dotfiles && stow */
 ```
 
@@ -65,7 +38,7 @@ cd dotfiles && stow */
 Export a list of installed packages from the old machine: 
 
 ```zsh
-brew leaves > ~/.leaves.txt
+brew leaves > ~/dotfiles/homebrew/.leaves.txt
 ```
 
 Alternatively, `stow homebrew`.
@@ -73,6 +46,7 @@ Alternatively, `stow homebrew`.
 Fresh install on the new machine: 
 
 ```zsh
+stow homebrew
 xargs brew install < ~/.leaves.txt
 ```
 
@@ -81,12 +55,13 @@ xargs brew install < ~/.leaves.txt
 Export a list of installed packages from the old machine: 
 
 ```zsh
-apt-mark showmanual > ~/.packages.txt
+apt-mark showmanual > ~/dotfiles/apt/.packages.txt
 ```
 
 Fresh install on the new machine: 
 
 ```zsh
+stow apt
 sudo apt-get update
 xargs -a ~/.packages.txt sudo apt-get install -y
 ```

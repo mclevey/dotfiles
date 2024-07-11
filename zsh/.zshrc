@@ -13,7 +13,6 @@ alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
 alias dfs="cd ~/dotfiles"
 alias repos='[ "$(uname)" = "Darwin" ] && cd /Users/johnmclevey/Documents/Repos/ || cd /home/mclevey/lab/john/repos/'
-alias buffy='ssh -p 22 mclevey@198.84.193.35'
 
 # Git
 alias gc="git commit -m"

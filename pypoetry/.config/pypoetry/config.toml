@@ -1,0 +1,37 @@
+[virtualenvs]
+path = "{cache-dir}/virtualenvs"
+create = true
+in-project = false
+
+[cache]
+ttl = "30d"
+
+[experimental]
+new-installer = true
+
+[installer]
+parallel = true
+max-retries = 3
+
+[cache-dir]
+path = "~/.cache/pypoetry"
+
+[virtualenvs]
+system-site-packages = false
+always-copy = true
+
+[log]
+level = "debug"
+
+[telemetry]
+enabled = false
+
+[plugins]
+enabled = [
+    "poetry-plugin"
+]
+
+# [scripts]
+# [repositories]
+# [pypi]
+# url = "https://pypi.org/simple"

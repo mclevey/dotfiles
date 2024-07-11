@@ -31,6 +31,34 @@ You can stow everything (assuming all configs are in subdirectories) with `stow 
 cd dotfiles && stow */
 ```
 
+## SSH Config
+
+I don't keep my `~/.ssh` in `dotfiles/`, but my config looks like this: 
+
+```
+Host <HOST> 
+  HostName <IP-ADDRESS>
+  User <USERNAME>
+  Port <PORT>
+
+Host *
+  SendEnv LANG LC_*                   
+  MACs hmac-sha2-256,hmac-sha2-512    
+  ForwardX11 no                       
+  ForwardAgent yes                    
+  ServerAliveInterval 15              
+  ConnectTimeout 20                   
+  Compression yes                     
+  ControlMaster auto                  
+  ControlPath ~/.ssh/cm-%r@%h:%p      
+  ControlPersist 600                  
+  TCPKeepAlive yes                    
+  ServerAliveCountMax 3               
+  LogLevel VERBOSE                    
+```
+
+which enables `ssh <HOST>`.
+
 # Installs
 
 On macOS, export a list of installed packages (from the old machine) using Homebrew:

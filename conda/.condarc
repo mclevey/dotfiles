@@ -1,0 +1,30 @@
+channels:
+  - conda-forge
+  - defaults
+
+custom_channels:
+  conda-forge: https://conda.anaconda.org
+  nvidia: https://nvidia.github.io
+
+channel_priority: flexible
+
+async_install: true
+
+envs_dirs:
+  - ~/conda/envs
+  - /opt/conda/envs
+pkgs_dirs:
+  - ~/conda/pkgs
+  - /opt/conda/pkgs
+
+auto_update_conda: false
+auto_activate_base: false
+
+show_channel_urls: true
+override_channels_enabled: false
+
+cuda_version: "12.5"
+
+solver: libmamba
+mamba:
+  max_parallel_downloads: 10

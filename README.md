@@ -31,37 +31,31 @@ You can stow everything (assuming all configs are in subdirectories) with `stow 
 cd dotfiles && stow */
 ```
 
-# Package Installs
+# Installs
 
-## macOS (Homebrew)
-
-Export a list of installed packages from the old machine: 
+On macOS, export a list of installed packages (from the old machine) using Homebrew:
 
 ```zsh
-brew leaves > ~/dotfiles/homebrew/.packages.txt
+brew leaves > ~/dotfiles/package_manager/.packages.txt
 ```
 
-Alternatively, `stow homebrew`.
-
-Fresh install on the new machine: 
-
-```zsh
-stow homebrew
-xargs brew install < ~/.packages.txt
-```
-
-## Ubuntu Linux (apt-get)
-
-Export a list of installed packages from the old machine: 
+On Linux, use `apt-mark`:
 
 ```zsh
 apt-mark showmanual > ~/dotfiles/apt/.packages.txt
 ```
 
-Fresh install on the new machine: 
+To install the packages on a new machine running macOS:
 
 ```zsh
-stow apt
+stow package_manager
+xargs brew install < ~/.packages.txt
+```
+
+To install the packages on a new machine running Linux:
+
+```zsh
+stow package_manager
 sudo apt-get update
 xargs -a ~/.packages.txt sudo apt-get install -y
 ```

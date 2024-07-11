@@ -1,0 +1,28 @@
+[user]
+	name = John McLevey
+	email = john.mclevey@uwaterloo.ca
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[core]
+  editor = nvim  
+  autocrlf = input 
+  excludesfile = ~/.gitignore_global
+[init]
+	defaultBranch = main
+[safe]
+	directory = /Users/johnmclevey/Documents/Repos/literature-analysis
+[diff]
+  tool = meld
+[difftool]
+  prompt = false
+[difftool "meld"]
+  cmd = meld "$LOCAL" "$REMOTE"
+[merge]
+  tool = meld 
+[filter "nbstripout"]
+  clean = nbstripout
+  smudge = cat
+  required = true

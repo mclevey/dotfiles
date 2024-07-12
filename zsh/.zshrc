@@ -35,7 +35,7 @@ alias gre='git reset'
 alias v="/opt/homebrew/bin/nvim"
 
 # Eza and FZF
-alias ls= eza
+alias ls="eza"
 alias l="eza -l --icons --git -a"
 alias ll="eza --tree --level=2 --long --icons --git"
 

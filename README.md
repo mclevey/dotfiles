@@ -1,31 +1,38 @@
 # `dotfiles/`
 
-John McLevey
-University of Waterloo
+John McLevey<br>University of Waterloo<br><john.mclevey@uwaterloo.ca>
 
-This repository contains my personal dotfiles, managed with `git` and GNU `stow`. It's designed for my current setup on macOS (currently 14.5, Sonoma) and Linux (Ubuntu 24.4 LTS, Noble Numbat).
+This repository contains my personal dotfiles, managed with `git` and GNU `stow`. It's designed for my current setup on **macOS** (currently 14.5 "Sonoma") and **Linux** (currently Ubuntu 24.4 LTS, "Noble Numbat").
 
-```zsh
-stow */
-```
+Using `stow` to manage dotfiles requires adopting a strict directory structure. Each `dotfiles` subdirectory is a representation of the home directory (`~/`) containing the configuration files for a given program or category of programs (e.g., `nvim`, `tmux`). The trick is to organize the config files for each program or category of programs inside the subdirectory *exactly* as they should appear in `~/`. Then, when you run `stow <directory_name>`, `stow` will symlink the configs to the home directory. In other words, running `stow zsh` will symlink `dotfiles/zsh/.zshrc` to `~/.zshrc`.
 
-# Handling `.DS_Store` Files on macOS
+This works for files and subdirectories, even when they are hidden. For example, `~/dotfiles/tmux` contains `.tmux.conf` and `.tmux`, which contains `.tmux/plugins/...` and `.tmux/themes/...`. Running `stow tmux` symlinks the hidden config file to `~/.tmux.conf` and the hidden config subdirectory to `~/.tmux`. 
 
-`.DS_Store` files on macOS often cause file conflicts with `stow`. Sometimes I remove them by running `find ~/dotfiles -name ".DS_Store" -exec rm -f {} \;` (aliased as `cds`), but it's better just to tell `stow` to ignore `.DS_Store` files. You do this globally in `.stowrc`, or locally with a `.stow-local-ignore` file.
+![](tmux.png)
 
-## Stow everything
+This approach allows me to keep all my configs in one centralized directory under version control, which makes them more portable across different systems (macOS and Linux, in my case) as well as easier to manage and update.
 
-You can stow everything (assuming all configs are in subdirectories) with `stow */`.
+To stow all configurations at once, run:
 
 ```zsh
 cd dotfiles && stow */
 ```
 
+## Handling `.DS_Store` Files on macOS
+
+`.DS_Store` files on macOS often cause file conflicts with `stow`. There are a few ways to handle this issue. One is to simply find and remove them by running:
+
+```zsh
+find ~/dotfiles -name ".DS_Store" -exec rm -f {} \;
+```
+
+(or using the `cds` function defined in `.zshrc`). However, a better approach is to configure `stow` to ignore `.DS_Store` files. You can do this globally in a `.stowrc` file (`~/dotfiles/stow`) or locally using `.stow-local-ignore` files.
+
 ## SSH Config
 
-I don't keep my `~/.ssh` in `dotfiles/`, but my config looks like this:
+I don't keep my `~/.ssh` directory in `dotfiles/`, but my SSH config looks like this:
 
-```
+```ssh
 Host <HOST>
   HostName <IP-ADDRESS>
   User <USERNAME>
@@ -47,30 +54,36 @@ Host *
   LogLevel VERBOSE
 ```
 
-which enables `ssh <HOST>`.
+This configuration allows me to connect to a host with `ssh <HOST>`.
 
-# Installs
+## Installs
 
-On macOS, export a list of installed packages (from the old machine) using Homebrew:
+Exporting and importing lists of installed packages from a package manager simplies the process of installing important packages on a new machine. 
 
-```zsh
-brew leaves > ~/dotfiles/package_manager/.packages.txt
-```
+### On macOS
 
-On Linux, use `apt-mark`:
+Export a list of installed packages using Homebrew:
 
 ```zsh
-apt-mark showmanual > ~/dotfiles/apt/.packages.txt
+brew leaves > ~/dotfiles/package_manager/.leaves.txt
 ```
 
-To install the packages on a new machine running macOS:
+To install these packages on a new machine:
 
 ```zsh
 stow package_manager
-xargs brew install < ~/.packages.txt
+xargs brew install < ~/.leaves.txt
 ```
 
-To install the packages on a new machine running Linux:
+### On Linux
+
+Export a list of manually installed packages using `apt-mark`:
+
+```zsh
+apt-mark showmanual > ~/dotfiles/package_manager/.packages.txt
+```
+
+To install these packages on a new machine:
 
 ```zsh
 stow package_manager

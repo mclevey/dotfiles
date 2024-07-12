@@ -57,8 +57,8 @@ cds() {
 }
 
 # search for files or subdirectories in the current directory (not it's subdirectories) and print to screen with git info
-# e.g., `search_and_list tmux` reproduces the tmux example in dotfiles/tmux.png
-search_and_list() {
+# e.g., `sl tmux` reproduces the tmux example in dotfiles/tmux.png
+sl() {
     local pattern="$1"
     find . -maxdepth 1 -name "*$pattern*" | xargs -I {} eza --tree --level=2 --long --icons --git {}
 }

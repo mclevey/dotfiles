@@ -31,9 +31,6 @@ alias gcoall='git checkout -- .'
 alias gr='git remote'
 alias gre='git reset'
 
-# NVim
-alias v="/opt/homebrew/bin/nvim"
-
 # Eza and FZF
 alias ls="eza"
 alias l="eza -l --icons --git -a"

@@ -3,5 +3,5 @@
 find ~/dotfiles -name ".DS_Store" -exec rm -f {} \;
 stow */
 
-# if moved to ~/Documents:
-# stow -t ~ */
+# if repo moved outside home
+# stow --target ~ */

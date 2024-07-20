@@ -6,16 +6,34 @@ return {
       require "configs.conform"
     end,
   },
-
-  -- These are some examples, uncomment them if you want to see them work!
   {
     "epwalsh/obsidian.nvim",
-    config = function()
-      require("obsidian").setup({
-        -- add any configuration options here
-        dir = "~/Documents/JVPM", -- Your Obsidian vault directory
-      })
-    end,
+    version = "*",  -- latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      -- Update my workspaces once finished cleaning up Obsidian vault
+      workspaces = {
+        {
+          name = "personal",
+          path = "/Users/johnmclevey/Documents/JVPM",
+        },
+        {
+          name = "work",
+          path = "/Users/johnmclevey/Documents/JVPM",
+        },
+      },
+      completion = {
+        nvim_cmp = true,
+      },
+      -- Add any additional options here
+    },
   },
   {
     "neovim/nvim-lspconfig",
@@ -25,21 +43,26 @@ return {
     end,
   },
   {
-  	"williamboman/mason.nvim",
-  	opts = {
-  		ensure_installed = {
-  			"lua-language-server", "stylua",
-  			"html-lsp", "css-lsp" , "prettier"
-  		},
-  	},
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {
+        "lua-language-server", "stylua",
+        "html-lsp", "css-lsp", "prettier"
+      },
+    },
   },
   {
-  	"nvim-treesitter/nvim-treesitter",
-  	opts = {
-  		ensure_installed = {
-  			"vim", "lua", "vimdoc",
-       "html", "css"
-  		},
-  	},
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "vim", "lua", "vimdoc",
+        "html", "css",
+        "markdown",
+        "markdown_inline"
+      },
+      highlight = {
+        enable = true,
+      },
+    },
   },
 }

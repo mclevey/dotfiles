@@ -14,6 +14,9 @@ alias ......="cd ../../../../.."
 alias dfs="cd ~/dotfiles"
 alias repos='[ "$(uname)" = "Darwin" ] && cd /Users/johnmclevey/Documents/Repos/ || cd /home/mclevey/lab/john/repos/'
 
+# PDPP
+alias pg="pdpp graph --files png --style default"
+
 # Git
 alias gc="git commit -m"
 alias gca="git commit -a -m"

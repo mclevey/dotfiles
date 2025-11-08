@@ -90,3 +90,10 @@ stow package_manager
 sudo apt-get update
 xargs -a ~/.packages.txt sudo apt-get install -y
 ```
+
+
+## Clean '.DS_Store'
+
+```zsh
+find . -name '.DS_Store' -type f -delete
+```

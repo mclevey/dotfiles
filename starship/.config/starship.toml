@@ -60,15 +60,15 @@ format = "[$symbol]($style)"
 format = '([$all_status$ahead_behind]($style) )'
 style = "white"
 conflicted = '🔴'
-ahead = '🏎💨'
+ahead = '🔥'
 behind = '😰'
 diverged = '😵'
-up_to_date = '✓'
-untracked = '🤷'
+up_to_date = '🤘' # '✓'
+untracked = '🙃'
 stashed = '📦'
-modified = '📝'
+modified = '👌'
 staged = '[ ++\($count\)](green) '
-renamed = '👅'
+renamed = '🫡'
 deleted = '🗑'
 
 [git_state]

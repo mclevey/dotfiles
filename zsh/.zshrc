@@ -14,6 +14,9 @@ alias ......="cd ../../../../.."
 alias dfs="cd ~/dotfiles"
 alias repos='[ "$(uname)" = "Darwin" ] && cd /Users/johnmclevey/Documents/Repos/ || cd /home/mclevey/lab/john/repos/'
 
+# Run pre-commit hooks
+alias pcr="pre-commit run --all-files"
+
 # PDPP
 alias pg="pdpp graph --files png --style default"
 
@@ -91,3 +94,6 @@ unset __conda_setup
 # ZOXIDE AND STARSHIP
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+
+# Added by Windsurf
+export PATH="/Users/johnmclevey/.codeium/windsurf/bin:$PATH"

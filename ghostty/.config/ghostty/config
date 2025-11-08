@@ -1,0 +1,7 @@
+window-padding-x = 30
+window-padding-y = 30
+background-opacity = 0.9
+window-padding-balance = true
+
+font-family = "Hack Nerd Font Mono"
+font-size = 20

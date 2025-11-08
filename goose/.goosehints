@@ -1,0 +1,7 @@
+Always use Python for new projects.
+
+Follow the [Google Style Guide](google.github.io/styleguide/pyguide.html) for Python code. When creating new functions always include docstrings and complete typehints.
+
+Prefer functional programming patterns where applicable.
+
+Prefer vectorized approaches when using Pandas. Do not use .iterrows(). 

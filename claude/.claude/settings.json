@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Read(**)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git branch *)",
+      "Bash(git stash *)",
+      "Bash(git checkout *)",
+      "Bash(ruff check *)",
+      "Bash(ruff format *)",
+      "Bash(python -m pytest *)",
+      "Bash(pytest *)",
+      "Bash(pixi *)",
+      "Bash(poetry *)",
+      "Bash(conda *)",
+      "Bash(quarto render *)",
+      "Bash(quarto preview *)",
+      "Bash(wc *)",
+      "Bash(rg *)",
+      "Bash(fd *)",
+      "Bash(tree *)",
+      "Bash(which *)"
+    ],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/secrets/**)",
+      "Bash(rm -rf *)",
+      "Bash(git push *)",
+      "Bash(git reset --hard *)",
+      "Bash(git rebase *)",
+      "Bash(pip install *)",
+      "Bash(git checkout -- *)",
+      "Bash(git stash drop *)",
+      "Bash(git stash clear)",
+      "Bash(git branch -D *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_FILE_PATH\"; if [ \"${file##*.}\" = \"py\" ] && command -v ruff >/dev/null 2>&1; then ruff format --quiet \"$file\" || echo \"[hook] ruff format failed: $file\"; ruff check --fix --quiet \"$file\" || echo \"[hook] ruff check failed: $file\"; fi; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}

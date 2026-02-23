@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tput:*)",
+      "Bash(stty:*)",
+      "Bash(ghostty +list-config:*)",
+      "WebSearch",
+      "Bash(gh issue view:*)",
+      "Bash(chmod:*)"
+    ]
+  }
+}

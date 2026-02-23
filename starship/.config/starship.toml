@@ -7,7 +7,7 @@ $git_state\
 $git_status\
 $git_metrics\
 $conda\
-$fill\
+$battery\
 $python\
 $quarto\
 $cmd_duration $jobs\
@@ -16,8 +16,17 @@ $character"""
 
 command_timeout = 10000
 
+[battery]
+full_symbol = '🔋 '
+charging_symbol = '⚡️ '
+discharging_symbol = '💀 '
+
+[quarto]
+symbol = "⨁ "
+format = "[$symbol]($style) "
+
 [python]
-symbol = "  "
+symbol = " "
 format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 
 [conda]
@@ -63,7 +72,7 @@ conflicted = '🔴'
 ahead = '🔥'
 behind = '😰'
 diverged = '😵'
-up_to_date = '🤘' # '✓'
+up_to_date = '🤘'                                 # '✓'
 untracked = '🙃'
 stashed = '📦'
 modified = '👌'
@@ -98,4 +107,3 @@ when = "ps aux | grep stunnel | grep -v grep"
 command = "ps -o etime= -p $(ps aux | grep stunnel | grep -v grep | awk '{print $2}')"
 style = "red"
 format = "[TUNNEL OPEN for $output]($style)"
-

@@ -1,99 +1,101 @@
 # `dotfiles/`
 
-John McLevey<br>University of Waterloo<br><john.mclevey@uwaterloo.ca>
+John McLevey<br>
+Professor & Head, Sociology and Criminology<br>
+Memorial University of Newfoundland<br>
+mclevey@mun.ca<br>
 
-This repository contains my personal dotfiles, managed with `git` and GNU `stow`. It's designed for my current setup on **macOS** (currently 14.5 "Sonoma") and **Linux** (currently Ubuntu 24.4 LTS, "Noble Numbat").
+> Personal dotfiles managed with git and GNU stow, designed for macOS (ARM64) and Linux (x86_64, Ubuntu).
 
-Using `stow` to manage dotfiles requires adopting a strict directory structure. Each `dotfiles` subdirectory is a representation of the home directory (`~/`) containing the configuration files for a given program or category of programs (e.g., `nvim`, `tmux`). The trick is to organize the config files for each program or category of programs inside the subdirectory *exactly* as they should appear in `~/`. Then, when you run `stow <directory_name>`, `stow` will symlink the configs to the home directory. In other words, running `stow zsh` will symlink `dotfiles/zsh/.zshrc` to `~/.zshrc`.
+## How Stow Works
 
-This works for files and subdirectories, even when they are hidden. For example, `~/dotfiles/tmux` contains `.tmux.conf` and `.tmux`, which contains `.tmux/plugins/...` and `.tmux/themes/...`. Running `stow tmux` symlinks the hidden config file to `~/.tmux.conf` and the hidden config subdirectory to `~/.tmux`. 
+Each subdirectory in `dotfiles/` mirrors the home directory structure for a given program. Running `stow <directory>` creates symlinks from `~/` pointing into the dotfiles repo. For example, `stow zsh` symlinks `dotfiles/zsh/.zshrc` to `~/.zshrc`.
 
-![](tmux.png)
+This works for files and nested subdirectories, including hidden ones. Everything stays in one version-controlled directory, portable across machines.
 
-This approach allows me to keep all my configs in one centralized directory under version control, which makes them more portable across different systems (macOS and Linux, in my case) as well as easier to manage and update.
-
-To stow all configurations at once, run:
-
-```zsh
-cd dotfiles && stow */
-```
-
-## Handling `.DS_Store` Files on macOS
-
-`.DS_Store` files on macOS often cause file conflicts with `stow`. There are a few ways to handle this issue. One is to simply find and remove them by running:
+To stow all packages at once:
 
 ```zsh
-find ~/dotfiles -name ".DS_Store" -exec rm -f {} \;
+cds
 ```
 
-(or using the `cds` function defined in `.zshrc`). However, a better approach is to configure `stow` to ignore `.DS_Store` files. You can do this globally in a `.stowrc` file (`~/dotfiles/stow`) or locally using `.stow-local-ignore` files.
+The `cds` function (defined in `.zshrc`) cleans `.DS_Store` and `.pyc` files, then runs `stow --restow */` across all packages.
+
+## Packages
+
+| Package           | What it manages                                                       |
+| ----------------- | --------------------------------------------------------------------- |
+| `atuin`           | Shell history sync and search                                         |
+| `claude`          | Claude Code config: global CLAUDE.md, settings.json, agents, commands |
+| `conda`           | `.condarc` (channel and solver defaults)                              |
+| `ghostty`         | Ghostty terminal config                                               |
+| `git`             | `.gitconfig` and `.gitignore_global`                                  |
+| `goose`           | `.goosehints` (Goose AI assistant preferences)                        |
+| `matplotlib`      | Matplotlib style and config                                           |
+| `nvim`            | Neovim config (NvChad)                                                |
+| `package_manager` | Brew leaves (macOS) and apt packages (Linux)                          |
+| `pypoetry`        | Poetry configuration                                                  |
+| `starship`        | Starship prompt config                                                |
+| `stow`            | Stow's own config (`.stowrc`)                                         |
+| `tmux`            | Tmux config, plugins, and themes                                      |
+| `wezterm`         | WezTerm terminal config                                               |
+| `yazi`            | Yazi file manager config                                              |
+| `zellij`          | Zellij terminal multiplexer config                                    |
+| `zsh`             | `.zshrc` with aliases, functions, and environment setup               |
+
+## Claude Code
+
+The `claude` package manages Claude Code configuration as a stow package. Stow creates directory symlinks (tree folding) for `agents/` and `commands/`, so new agents or commands created within Claude Code automatically land in the dotfiles repo.
+
+Contents:
+
+- `CLAUDE.md` — Global context loaded every session (identity, coding standards, writing preferences, workflow conventions)
+- `settings.json` — Tool permissions (allow/deny lists) and a PostToolUse hook for auto-formatting Python with ruff
+- `agents/` — Task specialists (meeting minutes, data analysis, research writing, admin drafting, concept explanation)
+- `commands/` — Reusable slash commands (commit, review, meeting pipeline)
+
+## Git Configuration
+
+`.gitconfig` includes a global gitignore (`~/.gitignore_global`) and references external tools (meld for diff/merge). For machine-specific overrides (email, CUDA tools, editor), create a `~/.gitconfig-local` file (not stow-managed) and add to `.gitconfig`:
+
+```ini
+[includeIf "gitdir:~/"]
+    path = ~/.gitconfig-local
+```
+
+## Handling .DS_Store Files
+
+`.DS_Store` files cause stow conflicts on macOS. The `cds` function handles this automatically. The repo also has a `.stow-local-ignore` in packages where needed.
 
 ## SSH Config
 
-I don't keep my `~/.ssh` directory in `dotfiles/`, but my SSH config looks like this:
+SSH configuration is not stow-managed. See `~/.ssh/config` directly.
 
-```ssh
-Host <HOST>
-  HostName <IP-ADDRESS>
-  User <USERNAME>
-  Port <PORT>
+## Package Manager Exports
 
-Host *
-  SendEnv LANG LC_*
-  MACs hmac-sha2-256,hmac-sha2-512
-  ForwardX11 no
-  ForwardAgent yes
-  ServerAliveInterval 15
-  ConnectTimeout 20
-  Compression yes
-  ControlMaster auto
-  ControlPath ~/.ssh/cm-%r@%h:%p
-  ControlPersist 600
-  TCPKeepAlive yes
-  ServerAliveCountMax 3
-  LogLevel VERBOSE
-```
-
-This configuration allows me to connect to a host with `ssh <HOST>`.
-
-## Installs
-
-Exporting and importing lists of installed packages from a package manager simplies the process of installing important packages on a new machine. 
-
-### On macOS
-
-Export a list of installed packages using Homebrew:
+### macOS (Homebrew)
 
 ```zsh
 brew leaves > ~/dotfiles/package_manager/.leaves.txt
 ```
 
-To install these packages on a new machine:
+Install on a new machine:
 
 ```zsh
 stow package_manager
 xargs brew install < ~/.leaves.txt
 ```
 
-### On Linux
-
-Export a list of manually installed packages using `apt-mark`:
+### Linux (apt)
 
 ```zsh
 apt-mark showmanual > ~/dotfiles/package_manager/.packages.txt
 ```
 
-To install these packages on a new machine:
+Install on a new machine:
 
 ```zsh
 stow package_manager
 sudo apt-get update
 xargs -a ~/.packages.txt sudo apt-get install -y
-```
-
-
-## Clean '.DS_Store'
-
-```zsh
-find . -name '.DS_Store' -type f -delete
 ```

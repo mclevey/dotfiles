@@ -53,10 +53,12 @@ alias rr='ranger'
 # FUNCTIONS
 
 # Clean .DS_Store files and stow all configs
-cds() { 
+cds() {
   cd ~/dotfiles
-  find ~/dotfiles -name .DS_Store -exec rm -f {} \;
-  stow */
+  find . -name .DS_Store -exec rm -f {} +
+  find . -name '*.pyc' -exec rm -f {} +
+  stow --restow */
+  echo "Stowed: $(ls -d */ | tr -d '/' | tr '\n' ' ')"
 }
 
 # search for files or subdirectories in the current directory (not it's subdirectories) and print to screen with git info
@@ -76,19 +78,27 @@ export PATH="$PATH:/Users/johnmclevey/.local/bin"
 
 # CONDA
 
+# Lazy-load conda — only runs the expensive init when you first use it
+# if this works OK, just remove the standard conda block below
+conda() {
+  unfunction conda
+  eval "$('/Users/johnmclevey/miniconda3/bin/conda' 'shell.zsh' 'hook')"
+  conda "$@"
+}
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/johnmclevey/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/johnmclevey/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/johnmclevey/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/johnmclevey/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/Users/johnmclevey/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/Users/johnmclevey/miniconda3/etc/profile.d/conda.sh" ]; then
+#         . "/Users/johnmclevey/miniconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/Users/johnmclevey/miniconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
 
 # ZOXIDE AND STARSHIP
@@ -97,3 +107,12 @@ eval "$(starship init zsh)"
 
 # Added by Windsurf
 export PATH="/Users/johnmclevey/.codeium/windsurf/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/johnmclevey/.antigravity/antigravity/bin:$PATH"
+
+# opencode
+export PATH=/Users/johnmclevey/.opencode/bin:$PATH
+
+# sentry
+export PATH="/Users/johnmclevey/.sentry/bin":$PATH

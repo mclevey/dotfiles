@@ -1,7 +1,12 @@
-window-padding-x = 30
-window-padding-y = 30
+background-blur-radius = 20
 background-opacity = 0.9
-window-padding-balance = true
-
+cursor-style = block
 font-family = "Hack Nerd Font Mono"
 font-size = 20
+keybind = global:cmd+shift+s=toggle_quick_terminal
+shell-integration = detect
+theme = Ayu Mirage
+window-decoration = true
+window-padding-balance = true
+window-padding-x = 40
+window-padding-y = 40

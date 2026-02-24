@@ -58,7 +58,8 @@ cds() {
   find . -name .DS_Store -exec rm -f {} +
   find . -name '*.pyc' -exec rm -f {} +
   stow --restow */
-  echo "Stowed: $(ls -d */ | tr -d '/' | tr '\n' ' ')"
+  echo "👋 stowed dotfiles/"
+  # echo " Stowed: $(ls -d */ | tr -d '/' | tr '\n' ' ')"
 }
 
 # search for files or subdirectories in the current directory (not it's subdirectories) and print to screen with git info
@@ -102,3 +103,6 @@ export PATH=/Users/johnmclevey/.opencode/bin:$PATH
 
 # sentry
 export PATH="/Users/johnmclevey/.sentry/bin":$PATH
+
+# Auto-run cds on new shell instances
+cds

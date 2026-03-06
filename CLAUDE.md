@@ -1,6 +1,8 @@
 # CLAUDE.md
 
-This repository contains my personal dotfiles managed with GNU Stow. Each top-level directory is a stow package that mirrors `$HOME` structure. Running `stow <package>` from the repo root symlinks its contents into `~/`.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+This repository contains personal dotfiles managed with GNU Stow. Each top-level directory is a stow package that mirrors `$HOME` structure. Running `stow <package>` from the repo root symlinks its contents into `~/`.
 
 ## Key Commands
 
@@ -18,15 +20,15 @@ cd ~/dotfiles && stow -D <package>
 cd ~/dotfiles && stow -n -v <package>
 ```
 
-The `cds` function is defined in `zsh/.zshrc`.
+The `cds` function is defined in `zsh/.zshrc`. It runs automatically in a subshell on every new shell startup (last line of `.zshrc`), so dotfiles are always re-stowed.
 
 ## Stow Architecture
 
-Most packages target `$HOME` by default. The `.stowrc` in `stow/.stowrc` sets `--target=~/.config`, but this only applies when the `stow` package itself is stowed. Individual package stowing from the repo root uses the default target (`$HOME`).
+Most packages target `$HOME` by default. The `stow/.stowrc` sets `--target=~/.config` and `--ignore=.stowrc`, but this file only takes effect when it's symlinked to `~/.stowrc` (i.e., when the `stow` package is stowed). The repo-root `.stow-local-ignore` excludes `.DS_Store` and `reworking/*`.
 
 Packages that place files directly in `$HOME`: `zsh` (`.zshrc`), `git` (`.gitconfig`, `.gitignore_global`), `tmux` (`.tmux.conf`, `.tmux/`), `conda` (`.condarc`), `goose` (`.goosehints`).
 
-Packages that place files in `~/.config/`: `ghostty`, `nvim`, `starship`, `pypoetry`, `wezterm`, `yazi` (all via `.config/<app>/` subdirectories).
+Packages that place files in `~/.config/`: `ghostty`, `nvim`, `starship`, `pypoetry`, `wezterm`, `yazi`, `zellij` (all via `.config/<app>/` subdirectories).
 
 The `claude` package is special: it symlinks `~/.claude/` including `CLAUDE.md`, `settings.json`, `agents/`, and `commands/`. Because stow uses tree folding for directories, new agents or commands created in `~/.claude/` automatically land in the dotfiles repo.
 

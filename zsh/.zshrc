@@ -54,12 +54,13 @@ alias rr='ranger'
 
 # Clean .DS_Store files and stow all configs
 cds() {
+  local _orig_dir="$PWD"
   cd ~/dotfiles
   find . -name .DS_Store -exec rm -f {} +
   find . -name '*.pyc' -exec rm -f {} +
   stow --restow */
-  echo "👋 stowed dotfiles/"
-  # echo " Stowed: $(ls -d */ | tr -d '/' | tr '\n' ' ')"
+  echo "stowed dotfiles/"
+  cd "$_orig_dir"
 }
 
 # search for files or subdirectories in the current directory (not it's subdirectories) and print to screen with git info

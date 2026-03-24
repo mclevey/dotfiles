@@ -1,2 +1,9 @@
 .DS_Store
 reworking/
+clark/.local/*
+
+# temporarily ignoring until I am confident I have the privacy stuff sorted
+clark/
+
+# auth tokens
+nvk/.nvk/config.json

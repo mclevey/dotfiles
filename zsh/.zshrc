@@ -11,8 +11,8 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
-alias dfs="cd ~/dotfiles"
-alias repos='[ "$(uname)" = "Darwin" ] && cd /Users/johnmclevey/Documents/Repos/ || cd /home/mclevey/lab/john/repos/'
+alias dfs="cursor ~/dotfiles"
+alias repos='[ "$(uname)" = "Darwin" ] && cd /Users/johnmclevey/development/ || cd /home/mclevey/lab/john/repos/'
 
 # Run pre-commit hooks
 alias pcr="pre-commit run --all-files"
@@ -44,6 +44,9 @@ alias ll="eza --tree --level=2 --long --icons --git"
 
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow'
 source <(fzf --zsh)
+
+# Clark (CLI tool, runs inside pixi environment)
+alias clark='pixi run --manifest-path ~/development/clark/pixi.toml clark'
 
 # Misc
 alias c=clear

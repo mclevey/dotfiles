@@ -3,8 +3,8 @@
   "permissions": {
     "allow": [
       "Read(**)",
-      "Edit(*)",
-      "Write(*)",
+      "Edit(**)",
+      "Write(**)",
       "WebSearch(*)",
       "WebFetch(*)",
       "Bash(*)"
@@ -24,6 +24,14 @@
       "Bash(git stash drop *)",
       "Bash(git stash clear)",
       "Bash(git branch -D *)"
+    ],
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": [
+      "~/",
+      "~/dotfiles",
+      "~/.config",
+      "~/projects",
+      "~/.local/share/clark"
     ]
   },
   "hooks": {
@@ -38,5 +46,6 @@
         ]
       }
     ]
-  }
+  },
+  "skipDangerousModePermissionPrompt": true
 }

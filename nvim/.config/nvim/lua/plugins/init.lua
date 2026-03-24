@@ -8,7 +8,7 @@ return {
   },
   {
     "epwalsh/obsidian.nvim",
-    version = "*",  -- latest release instead of latest commit
+    version = "*", -- latest release instead of latest commit
     lazy = true,
     ft = "markdown",
     dependencies = {
@@ -22,11 +22,11 @@ return {
       workspaces = {
         {
           name = "personal",
-          path = "/Users/johnmclevey/Documents/JVPM",
+          path = "/Users/johnmclevey/Vaults/BlackBook",
         },
         {
           name = "work",
-          path = "/Users/johnmclevey/Documents/JVPM",
+          path = "/Users/johnmclevey/Vaults/BlackBook",
         },
       },
       completion = {

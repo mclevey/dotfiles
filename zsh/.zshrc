@@ -78,7 +78,7 @@ sl() {
 # autocompletions + path (cached, regenerated daily)
 autoload -U +X compinit
 if [[ -f ~/.zcompdump(#qN.mh+24) ]]; then
-  compinit
+  compinit -u
 else
   compinit -C
 fi
@@ -110,3 +110,6 @@ export PATH="/Users/johnmclevey/.sentry/bin":$PATH
 
 # Auto-run cds on new shell instances
 cds
+
+# Source machine-specific config if present (not tracked)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
